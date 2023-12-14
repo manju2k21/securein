@@ -1,0 +1,75 @@
+def undoom_dice(a,b):
+  arr=[]
+  d1={} 
+
+  #finding all possible sum of  die  a and b
+  for i in range(6):
+      arr.append([])
+      for j in range(6):
+          s=a[i]+b[j]
+          arr[i].append(s)
+          if s in d1.keys():
+              d1[s]+=1 
+          else:
+              d1[s]=1
+  # print(arr)
+
+  new_b=[]
+  start=[]
+  # find  possible new_b
+  c=-1
+  for i in range(0,-5,-1):
+      c+=1
+      if i+5<=4:
+
+          start.append(i)
+          new_b.append(arr[c])
+
+  print(start)    
+  print(new_b)
+
+  #find new_a
+  new_a=[]
+
+  for i in start:
+      new_a.append([x for x in range(i ,i+6)])
+
+
+
+  #checking for  equal probability between old and new die
+  for i in range(len(start)):
+      d2={}
+      print(new_a[i])
+      print(new_b[i])
+      for j in range(6):
+          for k in range(6):
+              s=new_a[i][j]+new_b[i][k]
+              # print(s,end=" ")
+              if s in d2.keys():
+                  d2[s]+=1 
+              else:
+                  d2[s]=1
+
+      flag=True
+      for j in d1.keys():
+          if (d1[j]/36)!=(d2[j]/36):
+              flag=False
+      print(flag)
+
+      print("\n\n")
+  return(new_a,new_b)
+
+
+
+# old_die_A=[1,2,3,4,5,6]
+# old_die_B=[1,2,3,4,5,6]
+print("Die_A\n")
+old_die_A=[int(x) for x in input().split(" ")]
+print("\nDie_B\n")
+old_die_B=[int(x) for x in input().split(" ")]
+print("\n")
+
+# to print dice 
+new=undoom_dice(old_die_A,old_die_B)
+for i in range(len(new[0])):
+  print(f"New_die_A = {new[0][i]} , New_die_B = {new[1][i]}")
